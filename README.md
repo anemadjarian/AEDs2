@@ -17,4 +17,5 @@ Esse repositório armazena o conteúdo abordado na disciplina de Algoritmos e Es
 | Provas | 60 |
 | TPs | 20 |
 | Desempenho | 15 |
-| ADA | 5 |
+| ADA* | 5 |
+*ADA é uma avaliação global que contempla todas as matérias estudadas em todos os semestres do curso.
