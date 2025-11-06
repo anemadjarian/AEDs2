@@ -1,17 +1,17 @@
-# Algoritmos e Estruturas de Dados II - AEDs2  
-Esserepositório armazena o conteúdo abordado na disciplina de Algoritmos e Estruturas de Dados II, realizada no segundo semestre de 2025.  
+# 💡 Algoritmos e Estruturas de Dados II - AEDs2  
+Esse repositório armazena o conteúdo abordado na disciplina de Algoritmos e Estruturas de Dados II, realizada no segundo semestre de 2025.  
 
-## Matéria  
+## 📝 Matéria  
 - Estruturas de Dados Básicas Lineares
 - Ordenação em Memória Principal
 - Estruturas de Dados Básicas Flexíveis
 - Árvores Binárias
 
-## Professor
+## 🧑‍🏫 Professor
 **Max do Val Machado**
 - Professor e Coordenador do ICEI (Instituto de Ciências Exatas e Informática)
 
-## Distribuição de Pontos
+## 🧠 Distribuição de Pontos
 | Atividade | Pontos |
 |:--------------:|:------:|
 | Provas | 60 |
