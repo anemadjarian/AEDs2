@@ -6,6 +6,10 @@ Esse repositório armazena o conteúdo abordado na disciplina de Algoritmos e Es
 - Ordenação em Memória Principal
 - Estruturas de Dados Básicas Flexíveis
 - Árvores Binárias
+  
+## 🔠 Linguagens
+- Java
+- C
 
 ## 🧑‍🏫 Professor
 **Max do Val Machado**
