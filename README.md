@@ -12,10 +12,10 @@ Esse repositório armazena o conteúdo abordado na disciplina de Algoritmos e Es
 - C
 
 ## 🧑‍🏫 Professor  
-Aula teórica: **Max do Val Machado**  
+Aulas teóricas: **Max do Val Machado**  
 - Professor e Coordenador do ICEI (Instituto de Ciências Exatas e Informática)  
 
-Aula prática: **Matheus Barros Pereira**  
+Aulas práticas: **Matheus Barros Pereira**  
 
 ## 🧠 Distribuição de Pontos
 | Atividade | Pontos |
