@@ -21,8 +21,8 @@ Aulas práticas: **Matheus Barros Pereira**
 | Atividade | Pontos |
 |:--------------:|:------:|
 | Provas teóricas | 30 |
-| TPs | 20 |
 | Provas práticas | 24 |
+| TPs | 20 |
 | Desempenho | 15 |
 | Quizes | 6 |
 | ADA* | 5 |  
