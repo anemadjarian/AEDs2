@@ -20,9 +20,11 @@ Aulas práticas: **Matheus Barros Pereira**
 ## 🧠 Distribuição de Pontos
 | Atividade | Pontos |
 |:--------------:|:------:|
-| Provas | 60 |
+| Provas teóricas | 30 |
 | TPs | 20 |
+| Provas práticas | 24 |
 | Desempenho | 15 |
+| Quizes | 6 |
 | ADA* | 5 |  
 
 *ADA é uma avaliação global que contempla todas as matérias estudadas em todos os semestres do curso.
