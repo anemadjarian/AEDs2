@@ -11,9 +11,11 @@ Esse repositório armazena o conteúdo abordado na disciplina de Algoritmos e Es
 - Java
 - C
 
-## 🧑‍🏫 Professor
-**Max do Val Machado**
-- Professor e Coordenador do ICEI (Instituto de Ciências Exatas e Informática)
+## 🧑‍🏫 Professor  
+Aula teórica: **Max do Val Machado**  
+- Professor e Coordenador do ICEI (Instituto de Ciências Exatas e Informática)  
+
+Aula prática: **Matheus Barros Pereira**  
 
 ## 🧠 Distribuição de Pontos
 | Atividade | Pontos |
