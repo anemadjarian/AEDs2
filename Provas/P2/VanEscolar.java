@@ -17,7 +17,6 @@ class VanEscolar {
         Scanner sc = new Scanner(System.in);
         List<Aluno> lista = new ArrayList<>();
 
-        // Lê até o final da entrada (Ctrl+D no Linux/Mac, Ctrl+Z no Windows)
         while (sc.hasNextLine()) {
             String linha = sc.nextLine().trim();
             if (linha.isEmpty()) continue;
@@ -32,7 +31,6 @@ class VanEscolar {
             lista.add(new Aluno(nome, regiao, distancia));
         }
 
-        // Ordenar por distância, depois região, depois nome
         lista.sort(Comparator
             .comparingInt((Aluno a) -> a.distancia)
             .thenComparing(a -> a.regiao)

@@ -18,14 +18,12 @@ int main() {
         int matriz[n][m];
         int resp[n][m];
 
-        // Ler matriz
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 scanf("%d", &matriz[i][j]);
             }
         }
 
-        // Processar matriz
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (matriz[i][j] == 1) {
@@ -33,17 +31,16 @@ int main() {
                 } else {
                     int soma = 0;
 
-                    if (i > 0) soma += matriz[i - 1][j];       // cima
-                    if (i < n - 1) soma += matriz[i + 1][j];   // baixo
-                    if (j > 0) soma += matriz[i][j - 1];       // esquerda
-                    if (j < m - 1) soma += matriz[i][j + 1];   // direita
+                    if (i > 0) soma += matriz[i - 1][j]; // cima
+                    if (i < n - 1) soma += matriz[i + 1][j]; // baixo
+                    if (j > 0) soma += matriz[i][j - 1]; // esquerda
+                    if (j < m - 1) soma += matriz[i][j + 1]; // direita
 
                     resp[i][j] = soma;
                 }
             }
         }
 
-        // Mostrar resultado
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 printf("%d", resp[i][j]);
