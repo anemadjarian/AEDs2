@@ -15,7 +15,7 @@ Esse repositório armazena o conteúdo abordado na disciplina de Algoritmos e Es
 - C
 
 ## 🧑‍🏫 Professores 
-Aulas teóricas: **Max do Val Machado**
+Aulas teóricas: **Max do Val Machado**  
 Aulas práticas: **Matheus Barros Pereira**
 
 ## 🧠 Distribuição de Pontos
