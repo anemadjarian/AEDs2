@@ -2,7 +2,7 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
-public class GameAB {
+public class GameRehash {
 
     public int id;
     public String name;
@@ -19,7 +19,7 @@ public class GameAB {
     public List<String> genres;
     public List<String> tags;
 
-    public GameAB() {
+    public GameRehash() {
         supportedLanguages = new ArrayList<>();
         publishers = new ArrayList<>();
         developers = new ArrayList<>();
@@ -96,8 +96,8 @@ public class GameAB {
         return out.toArray(new String[0]);
     }
 
-    public static Map<Integer, GameAB> loadCSV(String file) throws IOException {
-        Map<Integer, GameAB> map = new HashMap<>();
+    public static Map<Integer, GameRehash> loadCSV(String file) throws IOException {
+        Map<Integer, GameRehash> map = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             br.readLine(); // cabeçalho
             String line;
@@ -105,7 +105,7 @@ public class GameAB {
                 if (line.trim().isEmpty()) continue;
                 String[] f = splitCSV(line);
                 if (f.length < 2) continue; // requer ao menos id e name
-                GameAB g = new GameAB();
+                GameRehash g = new GameRehash();
                 g.id = parseInt(f[0], 0);
                 g.name = clean(f[1]);
                 g.releaseDate = (f.length > 2) ? parseDate(f[2]) : "01/01/0001";
@@ -117,85 +117,136 @@ public class GameAB {
         return map;
     }
 
-    // ------------------------------------------------
-    // Árvore Binária
-    // ------------------------------------------------
-    static class No {
-        GameAB game;
-        No esq, dir;
+    static class HashReserva {
 
-        No(GameAB g) {
-            this.game = g;
-            this.esq = this.dir = null;
-        }
-    }
+        private GameRehash[] tabela = new GameRehash[30];
+        private int tamPrincipal = 21;
 
-    static class ArvoreBinaria {
-        No raiz;
-        // contador global de comparações (acessível externamente)
-        long comparacoes;
+        private int comparacoes = 0;
 
-        ArvoreBinaria() {
-            raiz = null;
-            comparacoes = 0;
-        }
-
-        public void inserir(GameAB g) {
-            raiz = inserirRec(raiz, g);
-        }
-
-        private No inserirRec(No no, GameAB g) {
-            if (no == null) return new No(g);
-
-            comparacoes++; // comparando nomes para decidir inserir
-            int cmp = g.name.compareTo(no.game.name);
-
-            if (cmp < 0) {
-                no.esq = inserirRec(no.esq, g);
-            } else if (cmp > 0) {
-                no.dir = inserirRec(no.dir, g);
-            } else {
-                // cmp == 0 -> não insere duplicado
-            }
-            return no;
-        }
-
-        // Pesquisa que constrói caminho e incrementa comparações
-        public boolean pesquisarComCaminho(String nome, StringBuilder caminho) {
-            caminho.append("=>raiz  "); // dois espaços após raiz
-            return pesquisarRec(raiz, nome, caminho);
-        }
-
-        private boolean pesquisarRec(No no, String nome, StringBuilder caminho) {
-            if (no == null) return false;
-
-            comparacoes++; // cada comparação de nomes
-            int cmp = nome.compareTo(no.game.name);
-
-            if (cmp == 0) {
-                return true;
-            } else if (cmp < 0) {
-                caminho.append("esq ");
-                return pesquisarRec(no.esq, nome, caminho);
-            } else {
-                caminho.append("dir ");
-                return pesquisarRec(no.dir, nome, caminho);
-            }
-        }
-
-        public long getComparacoes() {
+        public int getComparacoes() {
             return comparacoes;
         }
+
+        private int asciiSum(String s) {
+            int soma = 0;
+            for (int i = 0; i < s.length(); i++) soma += s.charAt(i);
+            return soma;
+        }
+
+        public int hash(String nome) {
+            return (asciiSum(nome)+1) % tamPrincipal;
+        }
+
+        public int rehash(String nome) {
+            return (asciiSum(nome)+1) % tamPrincipal;
+        }
+
+        public void inserir(GameRehash g) {
+            int pos = hash(g.name);
+
+            // tentativa na área principal
+            if (tabela[pos] == null) {
+                tabela[pos] = g;
+            } else {
+                // insere na área de reserva
+                for (int i = tamPrincipal; i < 30; i++) {
+                    if (tabela[i] == null) {
+                        tabela[i] = g;
+                        return;
+                    }
+                }
+            }
+        }
+
+        public int buscar1(String nome) {
+            int pos = hash(nome);
+
+            // compara posição principal
+            comparacoes++;
+            if (tabela[pos] != null && tabela[pos].name.equals(nome)) {
+                return pos;
+            }
+
+            // compara área de reserva
+            for (int i = tamPrincipal; i < 30; i++) {
+                comparacoes++;
+                if (tabela[i] != null && tabela[i].name.equals(nome)) {
+                    return i;
+                }
+            }
+
+            return pos;
+        }
+
+        public boolean buscar2(String nome) {
+            int pos = hash(nome);
+
+            // compara posição principal
+            comparacoes++;
+            if (tabela[pos] != null && tabela[pos].name.equals(nome)) {
+                return true;
+            }
+
+            // compara área de reserva
+            for (int i = tamPrincipal; i < 30; i++) {
+                comparacoes++;
+                if (tabela[i] != null && tabela[i].name.equals(nome)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public int buscar3(String nome) {
+            int pos = rehash(nome);
+
+            // compara posição principal
+            comparacoes++;
+            if (tabela[pos] != null && tabela[pos].name.equals(nome)) {
+                return pos;
+            }
+
+            // compara área de reserva
+            for (int i = tamPrincipal; i < 30; i++) {
+                comparacoes++;
+                if (tabela[i] != null && tabela[i].name.equals(nome)) {
+                    return i;
+                }
+            }
+
+            return pos;
+        }
+        
+        public boolean buscar4(String nome) {
+            int pos = rehash(nome);
+
+            // compara posição principal
+            comparacoes++;
+            if (tabela[pos] != null && tabela[pos].name.equals(nome)) {
+                return true;
+            }
+
+            // compara área de reserva
+            for (int i = tamPrincipal; i < 30; i++) {
+                comparacoes++;
+                if (tabela[i] != null && tabela[i].name.equals(nome)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
-    // ------------------------------------------------
-    // Programa principal
-    // ------------------------------------------------
+
+
     public static void main(String[] args) throws Exception {
-        // Ajuste o caminho do CSV conforme seu ambiente
+
         String csvPath = "/tmp/games.csv";
 
-        Map<Integer, GameAB> allGames;
+        Map<Integer, GameRehash> allGames;
         try {
             allGames = loadCSV(csvPath);
         } catch (IOException e) {
@@ -204,59 +255,67 @@ public class GameAB {
         }
 
         Scanner sc = new Scanner(System.in);
-        List<GameAB> listaInsercao = new ArrayList<>();
+        List<GameRehash> listaInsercao = new ArrayList<>();
 
-        // Lê IDs até "FIM"
+        // Entrada até FIM (IDs)
         while (sc.hasNextLine()) {
-            String line = sc.nextLine();
-            if (line == null) break;
-            line = line.trim();
+            String line = sc.nextLine().trim();
             if (line.equals("FIM")) break;
             if (line.isEmpty()) continue;
+
             try {
                 int id = Integer.parseInt(line);
                 if (allGames.containsKey(id)) {
                     listaInsercao.add(allGames.get(id));
                 }
-            } catch (NumberFormatException ignore) {
-                // ignora linhas não numéricas possivelmente entre entradas
-            }
+            } catch (Exception ignore) {}
         }
 
-        // Cria árvore e insere
-        ArvoreBinaria arv = new ArvoreBinaria();
+        HashReserva tabela = new HashReserva();
+
         long tempoInicio = System.currentTimeMillis();
-        for (GameAB g : listaInsercao) {
-            arv.inserir(g);
+
+        for (GameRehash g : listaInsercao) {
+            tabela.inserir(g);
         }
 
-        // Lê nomes e pesquisa, imprimindo no formato requisitado
+        // Consultas por nome
         while (sc.hasNextLine()) {
-            String nomeBusca = sc.nextLine();
-            if (nomeBusca == null) break;
-            nomeBusca = nomeBusca.trim();
+            String nomeBusca = sc.nextLine().trim();
             if (nomeBusca.equals("FIM")) break;
             if (nomeBusca.isEmpty()) continue;
 
-            StringBuilder caminho = new StringBuilder();
-            boolean achou = arv.pesquisarComCaminho(nomeBusca, caminho);
+            int posReal = tabela.buscar1(nomeBusca);
+            boolean resp = tabela.buscar2(nomeBusca);
 
-            // Imprime exatamente: NOME: <caminho>SIM/NAO
-            System.out.println(nomeBusca + ": " + caminho.toString() + (achou ? "SIM" : "NAO"));
+            int posReal2 = tabela.buscar3(nomeBusca);
+            boolean resp2 = tabela.buscar4(nomeBusca);
+
+            if(resp==false){
+                while(posReal2 != posReal){
+                    posReal2 = tabela.buscar3(nomeBusca);
+                    resp2 = tabela.buscar4(nomeBusca);
+                }
+            }
+            
+            int aa= posReal-1;
+
+            if (resp==true) {
+                System.out.println(nomeBusca + ":  (Posicao: " + aa + ") SIM");
+            } else {
+                System.out.println(nomeBusca + ":  (Posicao: " + aa + ") NAO");
+            }
         }
 
         long tempoExecucao = System.currentTimeMillis() - tempoInicio;
 
-        // Grava arquivo de log 
-        String matricula = "890191"; 
-        String nomeArquivoLog = "matrícula_arvoreBinaria.txt"; 
+        String matricula = "890191";
+        String nomeArquivoLog = matricula + "_hashReserva.txt";
 
         try (PrintWriter log = new PrintWriter(new FileWriter(nomeArquivoLog))) {
             log.println(matricula);
-            log.println("NUMERO DE COMPARACOES: " + arv.getComparacoes());
+            log.println("NUMERO DE COMPARACOES: " + tabela.getComparacoes());
             log.println("TEMPO DE EXECUCAO (ms): " + tempoExecucao);
-        } catch (IOException e) {
-            System.err.println("Erro ao criar arquivo de log: " + e.getMessage());
         }
 
         sc.close();
